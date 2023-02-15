@@ -23,7 +23,7 @@ export function formattedCollection2(collection: Collection2[]): GridData[] {
 
 
 export function pagination(page: number,data: GridData[]) {
-  const pageSize = 10;
+  const pageSize = 5;
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const gridData = data.slice(startIndex, endIndex);

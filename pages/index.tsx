@@ -9,7 +9,6 @@ import {
   operationsReducer,
 } from "@/reducers/operationsReducer";
 
-import Link from "next/link";
 import Router from "next/router";
 
 import {
@@ -18,8 +17,8 @@ import {
   pagination,
 } from "../utils/helper";
 import { Collection1, Collection2 } from "../interfaces/interfaces";
+import { GridPagination } from "@/components/GridPagination";
 
-import Pagination from "react-bootstrap/Pagination";
 
 interface PageProps {
   collection1: Collection1[];
@@ -79,17 +78,7 @@ export default function Home({ collection1, collection2, page }: PageProps) {
 
       <DataTable gridData={gridData} />
 
-      <Pagination
-        className="display-flex justify-content-center gap-5"
-      >
-        {page > 1 && (
-          <Pagination.First title="Anterior" onClick={() => Router.push(`/?page=${page - 1}`)} />
-        )}
-
-        {page < totalPages && (
-          <Pagination.Last  title="Siguiente" onClick={() => Router.push(`/?page=${page + 1}`)} />
-        )}
-      </Pagination>
+      <GridPagination page={page} totalPages={totalPages} />
     </Layout>
   );
 }

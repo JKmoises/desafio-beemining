@@ -14,7 +14,6 @@ export const SelectOperations = ({ handleChange, operation }: AppProps) => {
       className="w-50 ms-auto mt-5"
       value={operation}
     >
-      <option value="">Seleccione una operación</option>
       <option value="union">Unión Agrupada</option>
       <option value="interseccion">Intersección</option>
       <option value="diferencia">Diferencias</option>
