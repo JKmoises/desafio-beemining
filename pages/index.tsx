@@ -4,30 +4,43 @@ import {Layout} from '@/layout/Layout';
 import { SelectOperations } from '@/components/SelectOperations';
 import { Collection1, Collection2 } from '../interfaces/interfaces';
 import { operationsInitialState, operationsReducer } from "@/reducers/operationsReducer";
+import { formattedCollection1, formattedCollection2 } from '../utils/helper';
 
 
 interface PageProps{
-  collection1: Collection1;
-  collection2: Collection2;
+  collection1: Collection1[];
+  collection2: Collection2[];
 }
 
 
 export default function Home({ collection1, collection2 }: PageProps) {
-  const [operation, setOperation] = useState<string>("");
-  const [state, dispatch] = useReducer(operationsReducer,operationsInitialState);
+  const [operation, setOperation] = useState<string>("union");
+  const [state, dispatch] = useReducer(operationsReducer, operationsInitialState);
 
   useEffect(() => {
-    
     if (operation === "union") {
+      dispatch({
+        type: "UNION_OF_COLLECTIONS",
+        payload: [formattedCollection1(collection1), formattedCollection2(collection2)],
+      });
     }
 
     if (operation === "interseccion") {
-    }
-
-    if (operation === "diferencia") {
+      dispatch({
+        type: "INTERSECTION_OF_COLLECTIONS",
+        payload: [formattedCollection1(collection1), formattedCollection2(collection2)],
+      });
     }
     
-  }, [operation])
+
+    if (operation === "diferencia") {
+      dispatch({
+        type: "DIFFERENCE_OF_COLLECTIONS",
+        payload: [formattedCollection1(collection1), formattedCollection2(collection2)],
+      });
+    }
+    
+  }, [operation, collection1, collection2]);
   
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
