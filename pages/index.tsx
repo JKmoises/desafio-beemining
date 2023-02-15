@@ -10,10 +10,16 @@ import {
 } from "@/reducers/operationsReducer";
 
 import Link from "next/link";
-import  Router from "next/router";
+import Router from "next/router";
 
-import { formattedCollection1, formattedCollection2, pagination } from "../utils/helper";
+import {
+  formattedCollection1,
+  formattedCollection2,
+  pagination,
+} from "../utils/helper";
 import { Collection1, Collection2 } from "../interfaces/interfaces";
+
+import Pagination from "react-bootstrap/Pagination";
 
 interface PageProps {
   collection1: Collection1[];
@@ -64,7 +70,7 @@ export default function Home({ collection1, collection2, page }: PageProps) {
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setOperation(e.target.value);
-    Router.push('/');
+    Router.push("/");
   };
 
   return (
@@ -73,18 +79,17 @@ export default function Home({ collection1, collection2, page }: PageProps) {
 
       <DataTable gridData={gridData} />
 
-      <nav>
+      <Pagination
+        className="display-flex justify-content-center gap-5"
+      >
         {page > 1 && (
-          <Link href={`/?page=${page - 1}`}>
-            Anterior
-          </Link>
+          <Pagination.First title="Anterior" onClick={() => Router.push(`/?page=${page - 1}`)} />
         )}
+
         {page < totalPages && (
-          <Link href={`/?page=${page + 1}`}>
-           Siguiente
-          </Link>
+          <Pagination.Last  title="Siguiente" onClick={() => Router.push(`/?page=${page + 1}`)} />
         )}
-      </nav>
+      </Pagination>
     </Layout>
   );
 }
