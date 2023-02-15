@@ -20,3 +20,14 @@ export function formattedCollection2(collection: Collection2[]): GridData[] {
   })).sort((a, b) => a.concept_id - b.concept_id);
   
 }
+
+
+export function pagination(page: number,data: GridData[]) {
+  const pageSize = 10;
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const gridData = data.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(data.length / pageSize);
+
+  return { gridData, totalPages };
+}

@@ -1,63 +1,97 @@
-import { useState, useEffect,useReducer, ChangeEvent } from "react";
-import { DataTable } from '@/components/DateTable';
-import {Layout} from '@/layout/Layout';
-import { SelectOperations } from '@/components/SelectOperations';
-import { Collection1, Collection2 } from '../interfaces/interfaces';
-import { operationsInitialState, operationsReducer } from "@/reducers/operationsReducer";
-import { formattedCollection1, formattedCollection2 } from '../utils/helper';
+import { useState, useEffect, useReducer, ChangeEvent } from "react";
 
+import { DataTable } from "@/components/DateTable";
+import { SelectOperations } from "@/components/SelectOperations";
+import { Layout } from "@/layout/Layout";
 
-interface PageProps{
+import {
+  operationsInitialState,
+  operationsReducer,
+} from "@/reducers/operationsReducer";
+
+import Link from "next/link";
+import  Router from "next/router";
+
+import { formattedCollection1, formattedCollection2, pagination } from "../utils/helper";
+import { Collection1, Collection2 } from "../interfaces/interfaces";
+
+interface PageProps {
   collection1: Collection1[];
   collection2: Collection2[];
+  page: number;
 }
 
-
-export default function Home({ collection1, collection2 }: PageProps) {
+export default function Home({ collection1, collection2, page }: PageProps) {
   const [operation, setOperation] = useState<string>("union");
-  const [state, dispatch] = useReducer(operationsReducer, operationsInitialState);
+  const [state, dispatch] = useReducer(
+    operationsReducer,
+    operationsInitialState
+  );
 
   useEffect(() => {
     if (operation === "union") {
       dispatch({
         type: "UNION_OF_COLLECTIONS",
-        payload: [formattedCollection1(collection1), formattedCollection2(collection2)],
+        payload: {
+          collection1: formattedCollection1(collection1),
+          collection2: formattedCollection2(collection2),
+        },
       });
     }
 
     if (operation === "interseccion") {
       dispatch({
         type: "INTERSECTION_OF_COLLECTIONS",
-        payload: [formattedCollection1(collection1), formattedCollection2(collection2)],
+        payload: {
+          collection1: formattedCollection1(collection1),
+          collection2: formattedCollection2(collection2),
+        },
       });
     }
-    
 
     if (operation === "diferencia") {
       dispatch({
         type: "DIFFERENCE_OF_COLLECTIONS",
-        payload: [formattedCollection1(collection1), formattedCollection2(collection2)],
+        payload: {
+          collection1: formattedCollection1(collection1),
+          collection2: formattedCollection2(collection2),
+        },
       });
     }
-    
   }, [operation, collection1, collection2]);
-  
+
+  const { gridData, totalPages } = pagination(page, state.gridData);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setOperation(e.target.value);
-
+    Router.push('/');
   };
 
   return (
     <Layout>
       <SelectOperations operation={operation} handleChange={handleChange} />
 
-      <DataTable gridData={state.gridData} />
+      <DataTable gridData={gridData} />
+
+      <nav>
+        {page > 1 && (
+          <Link href={`/?page=${page - 1}`}>
+            Anterior
+          </Link>
+        )}
+        {page < totalPages && (
+          <Link href={`/?page=${page + 1}`}>
+           Siguiente
+          </Link>
+        )}
+      </nav>
     </Layout>
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }: any) {
+  const page = parseInt(query.page) || 1;
+
   const [resCollection1, resCollection2] = await Promise.all([
     fetch(`${process.env.API_URL}/DataSIGGE`),
     fetch(`${process.env.API_URL}/DataCEN`),
@@ -71,7 +105,7 @@ export async function getServerSideProps() {
     props: {
       collection1,
       collection2,
+      page,
     },
   };
 }
-
