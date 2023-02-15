@@ -7,7 +7,7 @@ export function formattedCollection1(collection: Collection1[]): GridData[] {
     periodo,
     rut: item.rut_facturadora,
     monto: item.monto_neto,
-  }));
+  })).sort((a, b) => a.concept_id - b.concept_id);
 }
 
 export function formattedCollection2(collection: Collection2[]): GridData[] {
@@ -17,6 +17,6 @@ export function formattedCollection2(collection: Collection2[]): GridData[] {
     periodo,
     rut: item.rut_acreedor,
     monto: item.monto,
-  }));
+  })).sort((a, b) => a.concept_id - b.concept_id);
   
 }

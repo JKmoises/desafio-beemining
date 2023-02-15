@@ -112,7 +112,7 @@ export function operationsReducer(state: OperationsState, action: OperationsActi
 
       return {
         ...state,
-        difference,
+        gridData: difference,
       };
   
     default:

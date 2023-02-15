@@ -1,7 +1,13 @@
 import Table from "react-bootstrap/Table";
 import { DataRegister } from "./DataRegister";
+import { GridData } from '../interfaces/interfaces';
 
-export const DataTable = () => {
+interface AppProps{
+  gridData: GridData[];
+}
+
+export const DataTable = ({ gridData }: AppProps) => {
+  console.log(gridData);
   return (
     <Table striped hover responsive className="mt-4 border text-center">
       <thead className="bg-primary text-white text-uppercase">
@@ -14,7 +20,9 @@ export const DataTable = () => {
         </tr>
       </thead>
       <tbody>
-        <DataRegister />
+        {gridData.map((data,i) => (
+          <DataRegister key={i+1} data={data} />
+        ))}
       </tbody>
     </Table>
   );

@@ -52,7 +52,7 @@ export default function Home({ collection1, collection2 }: PageProps) {
     <Layout>
       <SelectOperations operation={operation} handleChange={handleChange} />
 
-      <DataTable />
+      <DataTable gridData={state.gridData} />
     </Layout>
   );
 }
