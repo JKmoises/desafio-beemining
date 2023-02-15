@@ -1,7 +1,9 @@
+import { useState, useEffect,useReducer, ChangeEvent } from "react";
 import { DataTable } from '@/components/DateTable';
-import { SelectOperations } from '@/components/SelectOperations';
 import {Layout} from '@/layout/Layout';
+import { SelectOperations } from '@/components/SelectOperations';
 import { Collection1, Collection2 } from '../interfaces/interfaces';
+import { operationsInitialState, operationsReducer } from "@/reducers/operationsReducer";
 
 
 interface PageProps{
@@ -11,10 +13,31 @@ interface PageProps{
 
 
 export default function Home({ collection1, collection2 }: PageProps) {
+  const [operation, setOperation] = useState<string>("");
+  const [state, dispatch] = useReducer(operationsReducer,operationsInitialState);
+
+  useEffect(() => {
+    
+    if (operation === "union") {
+    }
+
+    if (operation === "interseccion") {
+    }
+
+    if (operation === "diferencia") {
+    }
+    
+  }, [operation])
+  
+
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setOperation(e.target.value);
+
+  };
 
   return (
     <Layout>
-      <SelectOperations />
+      <SelectOperations operation={operation} handleChange={handleChange} />
 
       <DataTable />
     </Layout>

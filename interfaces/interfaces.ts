@@ -1,3 +1,11 @@
+export interface GridData {
+  concept_id: number;
+  emp_auditada_id: number;
+  periodo: number;
+  rut: string;
+  monto: number;
+}
+
 export interface Collection1 {
   concept_id: number;
   emp_auditada_id: number;
