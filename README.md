@@ -18,3 +18,15 @@ Esta app consiste en una grilla paginada que muestra información dependiendo de
 - __Bootstrap__: Framework de _CSS_ que contiene utilidades y componentes para estilizar una interfaz de usuario.
 
 - __React Bootstrap__: _Fork_ de _Bootstrap_ que permite utilizar componentes de _React_.
+
+---
+
+## Estructura de carpetas:
+
+- __/components__: Carpeta que contiene los componentes de filtros por operación de conjunto, la grilla, los registros y la paginación.
+- __/context__: Contiene el _Context_ y _Provider_ para obtener la data de toda la app.
+- __/interfaces__: _Interfaces_ globales para aplicar tipado con _Typescript_.
+- __/layout__: Esta carpeta contiene el _layout (Diseño)_ base para las páginas de la app.
+- __/pages__: Esta carpeta contiene todas las páginas de la app.
+- __/reducers__: Carpeta con _reducer_ con sus _actions_ que contiene la lógica para realizar una _unión agrupada, intersección y diferencia_ de los dos conjuntos de datos consumidos.
+- __/utils__: Esta carpeta contiene un archivo _helper_ con funciones útiles y reutilizables.
