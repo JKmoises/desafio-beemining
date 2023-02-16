@@ -2,6 +2,8 @@
 
 Esta app consiste en una grilla paginada que muestra información dependiendo de unos filtros de operaciones de conjuntos, estas operaciones son la __unión agrupada__, la __intesección__ y la __diferencia__.
 
+
+### _URL de App Web:_ [https://desafio-beemining.vercel.app/](https://desafio-beemining.vercel.app/)
 ---
 
 
